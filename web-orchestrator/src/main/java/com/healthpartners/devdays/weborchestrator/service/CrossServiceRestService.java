@@ -19,7 +19,6 @@ public class CrossServiceRestService {
         return results;
     }
 
-    //TODO EXPOSE THIS IN WebOrchestrationController
     public String getCommentedContentForContentId(Long contentId) {
         //TODO netflix error handling stuff
         String result = restTemplate.getForObject(baseCrossServiceUrl + contentId, String.class);
