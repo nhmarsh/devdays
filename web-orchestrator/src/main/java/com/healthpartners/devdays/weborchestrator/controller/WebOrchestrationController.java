@@ -33,7 +33,7 @@ public class WebOrchestrationController {
     }
 
     @GetMapping("content")
-    public String getContentForValue(@RequestParam("search") String search) {
-        return contentServiceRestService.getContentForValue(search);
+    public String getContentForValue(@RequestParam("suffix") String suffix) {
+        return contentServiceRestService.getContentForValue(suffix);
     }
 }
