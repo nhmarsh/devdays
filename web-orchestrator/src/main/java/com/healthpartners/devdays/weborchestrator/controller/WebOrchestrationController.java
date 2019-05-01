@@ -3,6 +3,7 @@ package com.healthpartners.devdays.weborchestrator.controller;
 import com.healthpartners.devdays.weborchestrator.service.CrossServiceRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,8 @@ public class WebOrchestrationController {
         return crossServiceRestService.getAllCommentedContent();
     }
 
-    @GetMapping("cross2")
-    public String getCommentedContentForContentId(Long contentId) {
+    @GetMapping("cross/{id}")
+    public String getCommentedContentForContentId(@PathVariable("id") Long contentId) {
         return crossServiceRestService.getCommentedContentForContentId(contentId);
     }
 }
