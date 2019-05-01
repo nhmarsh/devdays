@@ -3,6 +3,7 @@ package com.healthpartners.devdays.weborchestrator.controller;
 import com.healthpartners.devdays.weborchestrator.service.ContentServiceRestService;
 import com.healthpartners.devdays.weborchestrator.service.CrossServiceRestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +22,14 @@ public class WebOrchestrationController {
     }
 
     @GetMapping("cross")
-    public List<String> getAllCommentedContent() {
-        return crossServiceRestService.getAllCommentedContent();
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<String>> getAllCommentedContent() {
+        return ResponseEntity.ok(crossServiceRestService.getAllCommentedContent());
     }
 
     @GetMapping("cross/{id}")
-    public String getCommentedContentForContentId(@PathVariable("id") Long contentId) {
-        return crossServiceRestService.getCommentedContentForContentId(contentId);
+    public ResponseEntity<String> getCommentedContentForContentId(@PathVariable("id") Long contentId) {
+        return ResponseEntity.ok(crossServiceRestService.getCommentedContentForContentId(contentId));
     }
 
     @GetMapping("content")
