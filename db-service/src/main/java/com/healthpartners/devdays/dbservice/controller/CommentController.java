@@ -1,5 +1,6 @@
 package com.healthpartners.devdays.dbservice.controller;
 
+import com.healthpartners.devdays.dbservice.CommentService;
 import com.healthpartners.devdays.dbservice.dao.CommentDao;
 import com.healthpartners.devdays.dbservice.dto.CommentDto;
 import com.healthpartners.devdays.dbservice.dto.mapper.CommentDtoMapper;
@@ -22,17 +23,17 @@ import java.util.stream.Collectors;
 @Transactional
 public class CommentController {
 
-    private final CommentDao commentDao;
+    private final CommentService commentService;
 
     @Autowired
-    public CommentController(CommentDao commentDao) {
-        this.commentDao = commentDao;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
     @GetMapping
     public ResponseEntity<List<CommentDto>> getComments() {
         //TODO error handling here
-        List<Comment> result = commentDao.findAll();
+        List<Comment> result = commentService.getComments();
         if(result != null && !result.isEmpty()) {
             return ResponseEntity.ok(result.stream().map(CommentDtoMapper::toDto).collect(Collectors.toList()));
         }
@@ -41,7 +42,7 @@ public class CommentController {
 
     @GetMapping("/{commentId}")
     public ResponseEntity<CommentDto> getById(@PathVariable("commentId") Long commentId) {
-        Comment commentForId = commentDao.getOne(commentId);
+        Comment commentForId = commentService.getCommentById(commentId);
 
         if(commentForId == null) {
             return ResponseEntity.notFound().build();
@@ -53,7 +54,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto comment) {
         Comment entity = CommentDtoMapper.toEntity(comment);
-        Comment result = commentDao.save(entity);
+        Comment result = commentService.createOrSave(entity);
         return ResponseEntity.ok(CommentDtoMapper.toDto(result));
     }
 
