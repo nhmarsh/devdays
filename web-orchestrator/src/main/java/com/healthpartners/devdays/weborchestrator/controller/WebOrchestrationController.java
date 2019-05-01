@@ -19,9 +19,13 @@ public class WebOrchestrationController {
         this.crossServiceRestService = crossServiceRestService;
     }
 
-
     @GetMapping("cross")
     public List<String> getAllCommentedContent() {
         return crossServiceRestService.getAllCommentedContent();
+    }
+
+    @GetMapping("cross2")
+    public String getCommentedContentForContentId(Long contentId) {
+        return crossServiceRestService.getCommentedContentForContentId(contentId);
     }
 }
