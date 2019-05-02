@@ -57,6 +57,12 @@ class App extends React.PureComponent {
                 updatedContent.push(response.data);
                 console.log(updatedContent);
                 self.setState({content: updatedContent, contentVal: ''});
+            })
+            .catch((err) => {
+                console.log(err);
+                self.setState({contentErrorMessage: err.message}, () => {
+                    console.log(self.state.contentErrorMessage);
+                })
             });
     }
 
