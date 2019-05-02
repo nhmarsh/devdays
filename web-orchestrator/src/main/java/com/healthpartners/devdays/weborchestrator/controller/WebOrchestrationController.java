@@ -44,7 +44,7 @@ public class WebOrchestrationController {
     }
 
     @GetMapping("/comment/{commentId}")
-    public CommentDto getCommentById(@PathVariable Long commentId) {
+    public CommentDto getCommentById(@PathVariable("commentId") Long commentId) {
 
     }
 
