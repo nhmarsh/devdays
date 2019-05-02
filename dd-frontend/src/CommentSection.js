@@ -1,6 +1,9 @@
 import React from 'react';
 
 function CommentSection(props) {
+    if(props.err) {
+        return <div>Down stop trying</div>
+    }
     return (<div>
         <input type={'text'} value={props.commentVal} onChange={props.updateCommentVal}/>
         <button onClick={props.addComment}>Submit</button>

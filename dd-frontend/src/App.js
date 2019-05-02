@@ -76,7 +76,8 @@ class App extends React.PureComponent {
                 self.setState({comments: updatedComments, commentVal: ''});
             })
             .catch(err => {
-                self.setState({commentErrorMessage: 'err'});
+                console.log(err);
+                self.setState({commentErrorMessage: err.message});
             })
     }
 
