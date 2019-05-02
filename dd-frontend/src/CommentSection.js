@@ -1,7 +1,14 @@
 import React from 'react';
 
-function CommentSection() {
-    return <div>Add and view comments here!</div>
+function CommentSection(props) {
+    return (<div>
+        <input type={'text'} value={props.commentVal} onChange={props.updateCommentVal}/>
+        <button onClick={props.addComment}>Submit</button>
+
+        <div>
+            {props.comments.map(datum => <div key={datum}>{datum.comment}</div>)}
+        </div>
+    </div>);
 }
 
 export default CommentSection;

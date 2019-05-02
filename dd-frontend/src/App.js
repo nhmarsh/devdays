@@ -25,13 +25,27 @@ class App extends React.PureComponent {
 
     componentDidMount() {
         const self = this;
-        axios.get('http://localhost:8085/cross')
+        self.updateCrossData();
+
+
+        axios.get('http://localhost:8085/comment')
             .then((response) => {
-                    self.setState({commentedContent: response.data})
+                self.setState({comments: response.data})
             })
             .catch((err) => {
                 console.log(err);
+            });
+    }
+
+    updateCrossData() {
+        const self = this;
+        axios.get('http://localhost:8085/cross')
+            .then((response) => {
+                self.setState({commentedContent: response.data})
             })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     addContent() {
@@ -52,7 +66,8 @@ class App extends React.PureComponent {
             .then(response => {
                 const updatedComments = self.state.comments.slice();
                 updatedComments.push(response.data);
-                self.setState({comments: updatedComments});
+                self.updateCrossData();
+                self.setState({comments: updatedComments, commentVal: ''});
             })
             .catch(err => {
                 self.setState({commentErrorMessage: 'err'});
@@ -74,7 +89,7 @@ class App extends React.PureComponent {
                     <section id="main" role="main">
                         <div className={'row'}>
                             <div className='margin-hack col-xs-4'>
-                                <CommentSection err={this.state.commentErrorMessage} commentVal={this.state.commentVal} updateCommentVal={this.updateCommentVal} addComment={this.addComment}/>
+                                <CommentSection err={this.state.commentErrorMessage} comments={this.state.comments} commentVal={this.state.commentVal} updateCommentVal={(event) => { this.updateCommentVal(event) }} addComment={() => { this.addComment() } }/>
                             </div>
                             <div className='margin-hack col-xs-4'>
                                 <CommentedContent err={this.state.crossErrorMessage} data={this.state.commentedContent}/>
