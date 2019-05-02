@@ -1,6 +1,7 @@
 package com.healthpartners.devdays.weborchestrator.controller;
 
 import com.healthpartners.devdays.weborchestrator.dto.CommentDto;
+import com.healthpartners.devdays.weborchestrator.service.CommentServiceRestService;
 import com.healthpartners.devdays.weborchestrator.service.ContentServiceRestService;
 import com.healthpartners.devdays.weborchestrator.service.CrossServiceRestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ public class WebOrchestrationController {
 
     private final CrossServiceRestService crossServiceRestService;
     private final ContentServiceRestService contentServiceRestService;
+    private final CommentServiceRestService commentServiceRestService;
 
     @Autowired
-    public WebOrchestrationController(CrossServiceRestService crossServiceRestService, ContentServiceRestService contentServiceRestService) {
+    public WebOrchestrationController(CrossServiceRestService crossServiceRestService, ContentServiceRestService contentServiceRestService, CommentServiceRestService commentServiceRestService) {
         this.crossServiceRestService = crossServiceRestService;
         this.contentServiceRestService = contentServiceRestService;
+        this.commentServiceRestService = commentServiceRestService;
     }
 
     @GetMapping("cross")
@@ -38,18 +41,18 @@ public class WebOrchestrationController {
         return contentServiceRestService.getContentForValue(suffix);
     }
 
-    @GetMapping("/comment")
+    @GetMapping("comment")
     public List<CommentDto> getComments() {
-
+        return commentServiceRestService.getComments();
     }
 
-    @GetMapping("/comment/{commentId}")
+    @GetMapping("comment/{commentId}")
     public CommentDto getCommentById(@PathVariable("commentId") Long commentId) {
-
+        return commentServiceRestService.getCommentById(commentId);
     }
 
-    @PostMapping("/comment")
+    @PostMapping("comment")
     public CommentDto createNewComment(@RequestBody CommentDto commentDto) {
-
+        return commentServiceRestService.postComment(commentDto);
     }
 }
