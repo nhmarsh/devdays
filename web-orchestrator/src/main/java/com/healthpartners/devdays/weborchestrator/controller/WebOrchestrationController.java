@@ -49,7 +49,7 @@ public class WebOrchestrationController {
     }
 
     @PostMapping("/comment")
-    public CommentDto createNewComment(String comment) {
+    public CommentDto createNewComment(@RequestBody CommentDto commentDto) {
 
     }
 }
