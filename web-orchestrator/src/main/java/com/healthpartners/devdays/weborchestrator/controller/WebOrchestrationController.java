@@ -1,5 +1,6 @@
 package com.healthpartners.devdays.weborchestrator.controller;
 
+import com.healthpartners.devdays.weborchestrator.dto.CommentDto;
 import com.healthpartners.devdays.weborchestrator.service.ContentServiceRestService;
 import com.healthpartners.devdays.weborchestrator.service.CrossServiceRestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class WebOrchestrationController {
 
     private final CrossServiceRestService crossServiceRestService;
@@ -22,7 +24,6 @@ public class WebOrchestrationController {
     }
 
     @GetMapping("cross")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<String>> getAllCommentedContent() {
         return ResponseEntity.ok(crossServiceRestService.getAllCommentedContent());
     }
@@ -33,7 +34,22 @@ public class WebOrchestrationController {
     }
 
     @GetMapping("content")
-    public String getContentForValue(@RequestParam("suffix") String suffix) {
+    public String getContentForValue(@RequestParam(value = "suffix", required=false) String suffix) {
         return contentServiceRestService.getContentForValue(suffix);
+    }
+
+    @GetMapping("/comment")
+    public List<CommentDto> getComments() {
+
+    }
+
+    @GetMapping("/comment/{commentId}")
+    public CommentDto getCommentById(@PathVariable Long commentId) {
+
+    }
+
+    @PostMapping("/comment")
+    public CommentDto createNewComment(String comment) {
+
     }
 }
