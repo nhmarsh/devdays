@@ -14,7 +14,12 @@ class App extends React.PureComponent {
         this.state = {
             comments: [],
             content: [],
-            commentedContent: []
+            commentedContent: [],
+            contentVal: '',
+            commentVal: '',
+            commentErrorMessage: '',
+            contentErrorMessage: '',
+            crossErrorMessage: ''
         }
     }
 
@@ -29,6 +34,38 @@ class App extends React.PureComponent {
             })
     }
 
+    addContent() {
+        const self = this;
+        axios.get("http://localhost:8085/content?suffix=" + self.state.contentVal)
+            .then((response) => {
+                console.log(self.state);
+                const updatedContent = self.state.content.slice();
+                updatedContent.push(response.data);
+                console.log(updatedContent);
+                self.setState({content: updatedContent, contentVal: ''});
+            });
+    }
+
+    addComment() {
+        const self = this;
+        axios.post('http://localhost:8085/comment', {comment: this.state.commentVal})
+            .then(response => {
+                const updatedComments = self.state.comments.slice();
+                updatedComments.push(response.data);
+                self.setState({comments: updatedComments});
+            })
+            .catch(err => {
+                self.setState({commentErrorMessage: 'err'});
+            })
+    }
+
+    updateContentVal(val) {
+        this.setState({contentVal: val.target.value});
+    }
+
+    updateCommentVal(val) {
+        this.setState({commentVal: val.target.value});
+    }
 
     render() {
         return (
@@ -37,13 +74,13 @@ class App extends React.PureComponent {
                     <section id="main" role="main">
                         <div className={'row'}>
                             <div className='margin-hack col-xs-4'>
-                                <CommentSection/>
+                                <CommentSection err={this.state.commentErrorMessage} commentVal={this.state.commentVal} updateCommentVal={this.updateCommentVal} addComment={this.addComment}/>
                             </div>
                             <div className='margin-hack col-xs-4'>
-                                <CommentedContent data={this.state.commentedContent}/>
+                                <CommentedContent err={this.state.crossErrorMessage} data={this.state.commentedContent}/>
                             </div>
                             <div className='margin-hack col-xs-4'>
-                                <ContentSection/>
+                                <ContentSection content={this.state.content} err={this.state.contentErrorMessage} contentVal={this.state.contentVal} updateContentVal={(event) => {this.updateContentVal(event) }} addContent={() => { this.addContent() }}/>
                             </div>
                         </div>
                     </section>
