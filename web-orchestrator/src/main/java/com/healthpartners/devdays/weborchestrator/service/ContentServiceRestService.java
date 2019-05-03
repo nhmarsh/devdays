@@ -31,6 +31,6 @@ public class ContentServiceRestService {
         if(breaker.isOpen()) {
             throw new RuntimeException("Down stop trying");
         }
-        return "Oops, something went wrong. Please try again!";
+        return "Oops, try again!";
     }
 }

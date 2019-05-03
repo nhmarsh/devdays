@@ -36,19 +36,19 @@ public class CommentServiceRestService {
     public List<CommentDto> fallbackGetComments() {
         System.out.println("Falling back on getComments");
         checkCircuitBreaker();
-        return Arrays.asList(CommentDto.builder().comment("Oops, that didn't work. Please try again!").build());
+        return Arrays.asList(CommentDto.builder().comment("Oops, try get again!").build());
     }
 
     public CommentDto postCommentFallback(CommentDto commentDto) {
         System.out.println("Falling back on postComments!");
         checkCircuitBreaker();
-        return CommentDto.builder().comment("Oops, that didn't work. Please try again!").build();
+        return CommentDto.builder().comment("Oops, try post again!").build();
     }
 
     public void checkCircuitBreaker() {
         HystrixCircuitBreaker breaker1 = HystrixCircuitBreaker.Factory.getInstance(HystrixCommandKey.Factory.asKey("getComments"));
         HystrixCircuitBreaker breaker2 = HystrixCircuitBreaker.Factory.getInstance(HystrixCommandKey.Factory.asKey("postComments"));
-        if(breaker1.isOpen() || breaker2.isOpen()) {
+        if((breaker1 != null && breaker1.isOpen()) || (breaker2 != null && breaker2.isOpen())) {
             throw new RuntimeException("Down stop trying");
         }
     }

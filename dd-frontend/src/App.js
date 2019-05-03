@@ -92,6 +92,7 @@ class App extends React.PureComponent {
     render() {
         return (
             <div className="App">
+                <h1>CHAOS ENGINEERING WITH NETFLIX</h1>
                 <header className="App-header">
                     <section id="main" role="main">
                         <div className={'row'}>
