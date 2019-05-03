@@ -95,13 +95,13 @@ class App extends React.PureComponent {
                 <header className="App-header">
                     <section id="main" role="main">
                         <div className={'row'}>
-                            <div className='margin-hack col-xs-4'>
+                            <div className='margin-hack col-xs-3'>
                                 <CommentSection err={this.state.commentErrorMessage} comments={this.state.comments} commentVal={this.state.commentVal} updateCommentVal={(event) => { this.updateCommentVal(event) }} addComment={() => { this.addComment() } }/>
                             </div>
-                            <div className='margin-hack col-xs-4'>
+                            <div className='margin-hack col-xs-3'>
                                 <CommentedContent err={this.state.crossErrorMessage} data={this.state.commentedContent}/>
                             </div>
-                            <div className='margin-hack col-xs-4'>
+                            <div className='margin-hack col-xs-3'>
                                 <ContentSection content={this.state.content} err={this.state.contentErrorMessage} contentVal={this.state.contentVal} updateContentVal={(event) => {this.updateContentVal(event) }} addContent={() => { this.addContent() }}/>
                             </div>
                         </div>
